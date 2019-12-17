@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Form  from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-export default class login extends Component {
+import { connect } from 'react-redux'
+import {loginUser} from '../actions/loginUser'
+class login extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -21,27 +23,28 @@ export default class login extends Component {
     handleSubmit = event =>{
         event.preventDefault()
         let user = { username: this.state.username, password: this.state.password}
-        this.loginUser(user)
+        this.props.loginUser(user)
+        console.log(this.props.currentUser)
     }
-    loginUser = user => {
-        const configObj = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ user: user })
-        }
-        fetch('http://localhost:3001/api/v1/login', configObj )
-        .then(r => r.json())
-        .then(data => {
-            console.log(data) 
-            localStorage.setItem('token', data.jwt);
-            console.log(localStorage.getItem('token'))
+    // loginUser = user => {
+    //     const configObj = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({ user: user })
+    //     }
+    //     fetch('http://localhost:3001/api/v1/login', configObj )
+    //     .then(r => r.json())
+    //     .then(data => {
+    //         console.log(data) 
+    //         localStorage.setItem('token', data.jwt);
+    //         console.log(localStorage.getItem('token'))
 
-            // should also set state with user info
-        })
-    }
+    //         // should also set state with user info
+    //     })
+    // }
     render() {
         return (
             <div>
@@ -68,3 +71,10 @@ export default class login extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) =>{
+    return {currentUser : state.currentUser}
+}
+
+
+export default connect( mapStateToProps, { loginUser })(login)

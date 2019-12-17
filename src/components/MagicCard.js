@@ -1,13 +1,19 @@
 import React from 'react'
+import Card from 'react-bootstrap/Card'
 
 const MagicCard = (props) =>{
     const { name, image_url } = props.card
 
     return (
-        <div>
-            <h4>{name}</h4>
-            <img src={image_url} alt="magic card" height="150" width="50"></img>
-        </div>
+        <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={image_url} />
+            <Card.Body>
+                <Card.Title>{name}</Card.Title>
+                <Card.Text>
+                save the cards rules text and put it here 
+                </Card.Text>
+            </Card.Body>
+        </Card>
     )
 }
 
