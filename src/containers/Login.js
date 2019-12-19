@@ -3,7 +3,8 @@ import Form  from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux'
 import {loginUser} from '../actions/loginUser'
-class login extends Component {
+
+class Login extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -77,4 +78,4 @@ const mapStateToProps = (state) =>{
 }
 
 
-export default connect( mapStateToProps, { loginUser })(login)
+export default connect( mapStateToProps, { loginUser })(Login)

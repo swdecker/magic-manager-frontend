@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import Form  from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import MagicCard from '../components/MagicCard'
+import AddCardCollection from './AddCardCollection'
+import { connect } from 'react-redux'
+import addCard from '../actions/addCard'
 
-export default class CardSearch extends Component {
+class CardSearch extends Component {
     state={
         cardName:"",
-        card: {}
+        card: null
     }
 
     handleChange = (event)=>{
@@ -40,9 +42,34 @@ export default class CardSearch extends Component {
             // should also set state with card info
         })
     }
+    handleClear = ()=>{
+        this.setState({
+            card: null,
+            cardName:""
+        })
+    }
+    addCardToCollection = (num_owned) =>{
+        const card = this.state.card
+        const token = localStorage.getItem('token')
+        const configObj = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify( { user: this.props.user, card: {...card, num_owned:num_owned } } )
+        }
+        fetch(`http://localhost:3001/api/v1/cards/${card.id}`, configObj )
+        .then(r => r.json())
+        .then(user_card => {
+            console.log(user_card) 
+            this.props.addCard(user_card)
+        })
+    }
     displayCard = () =>{
-        if (this.state.card.name){
-            return <MagicCard card={this.state.card} />
+        if (this.state.card){
+            return <AddCardCollection addCard={this.addCardToCollection} handleClear={this.handleClear} card={this.state.card} />
         }
     }
     render() {
@@ -58,11 +85,19 @@ export default class CardSearch extends Component {
                         </Form.Text>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Submit
+                        Search for card
                     </Button>
                 </Form>
+                
                 {this.displayCard()}
             </div>
         )
     }
 }
+const mapStateToProps = (state) =>{
+    return { user: state.usersReducer.currentUser } 
+}
+const mapDispatchToProps = (dispatch)=>{
+    return { addCard:(user_card)=> dispatch(addCard(user_card))}
+}
+export default connect( mapStateToProps, mapDispatchToProps )(CardSearch)

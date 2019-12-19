@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import Form  from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { connect } from 'react-redux'
+import { createUser } from '../actions/createUser'
 
-export default class Signup extends Component {
+class Signup extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -18,26 +20,26 @@ export default class Signup extends Component {
             [name]: value
         })
     }
-    createUser = user =>{
+    // createUser = user =>{
         
-        const configObj = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ user: user })
-        }
+    //     const configObj = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({ user: user })
+    //     }
             
-        fetch('http://localhost:3001/api/v1/users', configObj )
-        .then(r => r.json())
-        .then(user=> console.log(user) )
+    //     fetch('http://localhost:3001/api/v1/users', configObj )
+    //     .then(r => r.json())
+    //     .then(user=> console.log(user) )
         
-    }
+    // }
     handleSubmit = event =>{
         event.preventDefault()
         let user = { username: this.state.username, email:this.state.email, password: this.state.password}
-        this.createUser(user)
+        this.props.createUser(user)
     }
     render() {
         return (
@@ -71,3 +73,5 @@ export default class Signup extends Component {
         )
     }
 }
+
+export default connect(null,{createUser} )(Signup)
