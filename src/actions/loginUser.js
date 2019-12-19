@@ -46,7 +46,7 @@ export const loginUser = (user)=>{
         .then(data => {
             console.log(data) 
             localStorage.setItem('token', data.jwt);
-            dispatch(login())
+            dispatch(login(data.user))
         })
         .catch(error=> console.log(error))
     }
