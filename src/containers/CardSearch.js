@@ -79,7 +79,7 @@ class CardSearch extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formCardName">
                         <Form.Label>Card Name</Form.Label>
-                        <Form.Control onChange={this.handleChange} name={"cardName"} type="text" placeholder="Enter a card name" />
+                        <Form.Control onChange={this.handleChange} value={this.state.cardName} name={"cardName"} type="text" placeholder="Enter a card name" />
                         <Form.Text className="text-muted">
                         
                         </Form.Text>
