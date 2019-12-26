@@ -9,6 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 import AddCardPage from './containers/AddCardPage';
+import CollectionPage from './containers/CollectionPage';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route exact path='/addcard'>
           <AddCardPage />
+        </Route>
+        <Route exact path="/collection">
+          <CollectionPage />
         </Route>
       </Switch>
     </Router>
