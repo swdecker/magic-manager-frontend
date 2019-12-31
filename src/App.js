@@ -4,31 +4,46 @@ import Landing from './components/Landing/Landing'
 import Login from './containers/Login'
 import Signup from './containers/Signup';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
 } from "react-router-dom";
 import AddCardPage from './containers/AddCardPage';
+import CollectionPage from './containers/CollectionPage';
+import { connect } from 'react-redux';
+import history from './history';
 
-function App() {
+function App(props) {
   return (
-    <Router>
+    <Router history={history}>
       <Switch>
-        <Route exact path="/">
-          <Landing />
+        <Route exact path="/" component={Landing} >
+          
         </Route>
-        <Route exact path='/login'>
-          <Login />
+        <Route exact path='/login' component={Login}>
+          
         </Route>
         <Route exact path='/signup'>
           <Signup />
         </Route>
-        <Route exact path='/addcard'>
+        {props.currentUser && <Route exact path='/addcard'>
           <AddCardPage />
-        </Route>
+</Route> }
+        {props.currentUser && <Route exact path="/collection">
+          <CollectionPage />
+  </Route> }
+    <Route>
+      <Landing />
+    </Route>
       </Switch>
     </Router>
   );
 }
-
-export default App;
+function mapStateToProps(state) {
+  if(state.usersReducer.currentUser) {
+    return {
+      currentUser: state.usersReducer.currentUser
+    }
+  }
+}
+export default connect( mapStateToProps)(App);

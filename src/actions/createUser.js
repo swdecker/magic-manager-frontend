@@ -1,3 +1,5 @@
+import history from '../history'
+
 const startCreate = ()=>{
     return {type: "START_CREATE_USER_REQEST"}
 }
@@ -29,6 +31,7 @@ export const createUser =  (user) => {
             console.log(data) 
             localStorage.setItem('token', data.jwt);
             dispatch( create(data.user) )
+            history.push('collection')
         })
         .catch(error=> console.log(error))
     }
