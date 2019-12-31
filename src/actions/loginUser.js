@@ -15,6 +15,8 @@
 //     }
 // }
 
+import history from '../history'
+
 const startLogin = ()=>{
     return {type: "START_LOGIN_REQUEST"}
 }
@@ -47,6 +49,7 @@ export const loginUser = (user)=>{
             console.log(data) 
             localStorage.setItem('token', data.jwt);
             dispatch(login(data.user))
+            history.push('/collection')
         })
         .catch(error=> console.log(error))
     }

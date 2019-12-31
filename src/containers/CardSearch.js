@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import AddCardCollection from './AddCardCollection'
 import { connect } from 'react-redux'
 import addCard from '../actions/addCard'
-
+import history from '../history'
 class CardSearch extends Component {
     state={
         cardName:"",
@@ -17,11 +17,17 @@ class CardSearch extends Component {
             [name]: value
         })
     }
-    handleSubmit = event =>{
+    handleNameSubmit = event =>{
         event.preventDefault()
         let card = { cardName: this.state.cardName}
         this.searchCard(card)
     }
+
+    handleImageSubmit = event =>{ 
+        event.preventDefault()
+        // let cardImage = 
+    }
+
     searchCard = card => {
         const token = localStorage.getItem('token')
         const configObj = {
@@ -65,6 +71,7 @@ class CardSearch extends Component {
         .then(user_card => {
             console.log(user_card) 
             this.props.addCard(user_card)
+            history.push('/collection')
         })
     }
     displayCard = () =>{
@@ -76,7 +83,9 @@ class CardSearch extends Component {
          
         return (
             <div>
-                <Form onSubmit={this.handleSubmit}>
+                {!this.state.card && 
+                <div>
+                <Form onSubmit={this.handleNameSubmit}>
                     <Form.Group controlId="formCardName">
                         <Form.Label>Card Name</Form.Label>
                         <Form.Control onChange={this.handleChange} value={this.state.cardName} name={"cardName"} type="text" placeholder="Enter a card name" />
@@ -89,6 +98,19 @@ class CardSearch extends Component {
                     </Button>
                 </Form>
                 
+                <Form onSubmit id="image-form">
+                <Form.Group controlId="formCardImage">
+                        <Form.Label>Card Image</Form.Label>
+                        <Form.Control   name={"cardImage"} type="file" placeholder="Select an image " />
+                        <Form.Text className="text-muted">
+                        
+                        </Form.Text>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Search for card
+                    </Button>
+                </Form>
+                </div>}
                 {this.displayCard()}
             </div>
         )

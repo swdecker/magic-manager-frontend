@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 export default class CollectionPage extends Component {
     state = {
         cards:[]
+
     }
     componentDidMount=()=>{
         const token = localStorage.getItem('token')
@@ -18,18 +19,19 @@ export default class CollectionPage extends Component {
             },
         
         }
+
         fetch('http://localhost:3001/api/v1/userCards', configObj )
         .then(r => r.json())
         .then(data => {
             console.log(data)
             this.setState({
-                cards: data.cards
+                cards: data
             })
         })
     }
     renderCollection = () =>{
-        if( this.state.cards.length>1){
-            return this.state.cards.map(card=><MagicCard key={card.name} card={card} />)
+        if( this.state.cards.length>0){
+            return this.state.cards.map(card=><MagicCard key={card.card.name} num_owned={card.num_owned} card={card.card} />)
         }
     }
 
