@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import MagicCard from '../components/MagicCard'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
+import MagicNavbar from '../components/MagicNavbar'
 
 export default class CollectionPage extends Component {
     state = {
         cards:[]
 
     }
+    
     componentDidMount=()=>{
         const token = localStorage.getItem('token')
         const configObj = {
@@ -39,9 +41,12 @@ export default class CollectionPage extends Component {
     render() {
         return (
             <div>
+                <MagicNavbar />
+            <div>
                 <h1>Check out all your cards</h1>
                 <Link to={"/addCard"} ><Button>Add a card to collection </Button></Link>
                 <div> {this.renderCollection()}</div>
+            </div>
             </div>
         )
     }

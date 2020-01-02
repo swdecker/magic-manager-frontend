@@ -1,5 +1,6 @@
 const initialState = {
-    currentUser: {},
+    currentUser: null,
+    isLoggedIn: false,
     isFetching: false,
     isError: false
 }
@@ -12,7 +13,8 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                currentUser: action.user
+                currentUser: action.user,
+                isLoggedIn: true
             }
         case "START_LOGIN_REQUEST":
             return { ...state, isFetching:true}
@@ -20,12 +22,15 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching:false,
-                currentUser: action.user
+                currentUser: action.user,
+                isLoggedIn: true
             }
         case "LOGOUT":
+            localStorage.removeItem('token')
             return {
                 ...state,
-                currentUser: null
+                currentUser: null,
+                isLoggedIn: false
             }
         default:
             return state;
