@@ -9,8 +9,7 @@ export default class CollectionPage extends Component {
         cards:[]
 
     }
-    
-    componentDidMount=()=>{
+    retrieveCardsFetch=()=>{
         const token = localStorage.getItem('token')
         const configObj = {
             method: 'GET',
@@ -31,9 +30,33 @@ export default class CollectionPage extends Component {
             })
         })
     }
+    componentDidMount=()=>{
+        this.retrieveCardsFetch()
+    }
+
+    removeCard = (cardId) =>{ 
+        const token = localStorage.getItem('token')
+        const configObj = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        
+        }
+
+        fetch(`http://localhost:3001/api/v1/userCards/${cardId}`, configObj )
+        .then(r => r.json())
+        .then(data => {
+            console.log(data)
+            this.retrieveCardsFetch()
+        })
+    }
+
     renderCollection = () =>{
         if( this.state.cards.length>0){
-            return this.state.cards.map(card=><MagicCard key={card.card.name} num_owned={card.num_owned} card={card.card} />)
+            return this.state.cards.map(card =><MagicCard removeCard={this.removeCard} key={card.card.name} num_owned={card.num_owned} userCardId={card.id} card={card.card} />)
         }
     }
 
@@ -42,10 +65,10 @@ export default class CollectionPage extends Component {
         return (
             <div>
                 <MagicNavbar />
-            <div>
+            <div className={"collection-page"}>
                 <h1>Check out all your cards</h1>
                 <Link to={"/addCard"} ><Button>Add a card to collection </Button></Link>
-                <div> {this.renderCollection()}</div>
+                <div className={"card-collection"}> {this.renderCollection()}</div>
             </div>
             </div>
         )

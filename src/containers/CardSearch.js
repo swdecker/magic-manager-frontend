@@ -82,7 +82,7 @@ class CardSearch extends Component {
     render() {
          
         return (
-            <div>
+            <div className={'card-search'}>
                 {!this.state.card && 
                 <div>
                 <Form onSubmit={this.handleNameSubmit}>

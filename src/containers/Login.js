@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux'
 import {loginUser} from '../actions/loginUser'
 
+
 class Login extends Component {
     constructor(props){
         super(props)
@@ -51,6 +52,7 @@ class Login extends Component {
     render() {
         return (
             <div>
+            <div className='login'>
                 The login Form
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
@@ -70,6 +72,7 @@ class Login extends Component {
                         Submit
                     </Button>
                 </Form>
+            </div>
             </div>
         )
     }
