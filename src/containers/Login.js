@@ -26,7 +26,7 @@ class Login extends Component {
         let user = { username: this.state.username, password: this.state.password}
         this.props.loginUser(user)
         console.log(this.props.currentUser)
-        this.props.history.push("/collection")
+        
         
     }
     // loginUser = user => {

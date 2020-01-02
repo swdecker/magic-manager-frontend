@@ -16,34 +16,33 @@ import history from './history';
 function App(props) {
   return (
     <Router history={history}>
+      { props.isLoggedIn ?
+        <Switch>
+          <Route exact path='/addcard'>
+            <AddCardPage />
+          </Route> 
+          <Route exact path="/collection">
+            <CollectionPage />
+          </Route>
+          <Route component={CollectionPage} />
+       </Switch>
+      :
       <Switch>
-        <Route exact path="/" component={Landing} >
-          
-        </Route>
-        <Route exact path='/login' component={Login}>
-          
-        </Route>
-        <Route exact path='/signup'>
-          <Signup />
-        </Route>
-        {props.currentUser && <Route exact path='/addcard'>
-          <AddCardPage />
-</Route> }
-        {props.currentUser && <Route exact path="/collection">
-          <CollectionPage />
-  </Route> }
-    <Route>
-      <Landing />
-    </Route>
-      </Switch>
+        <Route exact path="/" component={Landing} ></Route>
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Signup} />
+        <Route component={Landing} />
+      </Switch>}
     </Router>
   );
+
 }
+
+
 function mapStateToProps(state) {
-  if(state.usersReducer.currentUser) {
     return {
-      currentUser: state.usersReducer.currentUser
+      currentUser: state.usersReducer.currentUser,
+      isLoggedIn: state.usersReducer.isLoggedIn
     }
-  }
 }
 export default connect( mapStateToProps)(App);

@@ -1,19 +1,4 @@
-// export const fetch_post= () =>{
-//     return { type: 'FETCH_USER' };
-// }
 
-// export const receive_post = post => {
-//     return {
-//         type: "FETCHED_USER",
-//         data: post
-//     }
-// }
-
-// export const receive_error = () => {
-//     return {
-//         type: "RECEIVE_ERROR"
-//     }
-// }
 
 import history from '../history'
 
@@ -49,9 +34,13 @@ export const loginUser = (user)=>{
             console.log(data) 
             localStorage.setItem('token', data.jwt);
             dispatch(login(data.user))
-            history.push('/collection')
+            if(data.jwt === localStorage.getItem('token')){
+                history.push('/collection')
+            }
+           
         })
         .catch(error=> console.log(error))
     }
     
 }
+
