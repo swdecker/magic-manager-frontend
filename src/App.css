@@ -13,6 +13,33 @@
   }
 }
 
+.login{
+  background-color: aliceblue;
+  margin: 20%;
+  border-radius: 10px;
+  border: 2px solid black;
+  max-width: 500px;
+}
+.collection-page{
+  margin:5%;
+  text-align: center;
+}
+.card-collection{
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+}
+.magic-card{
+margin: 20px
+}
+.add-card-page{
+  text-align: center;
+}
+.card-search{
+  background-color: aliceblue;
+  margin: 20%;
+  border-radius: 10px;
+  border: 2px solid black
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
