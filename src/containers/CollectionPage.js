@@ -3,7 +3,7 @@ import MagicCard from '../components/MagicCard'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import MagicNavbar from '../components/MagicNavbar'
-
+import CardSort from '../components/CardSort'
 export default class CollectionPage extends Component {
     state = {
         cards:[]
@@ -62,12 +62,14 @@ export default class CollectionPage extends Component {
 
 
     render() {
+        const sorts = ['alphabetic', 'color', 'number owned']
         return (
             <div>
                 <MagicNavbar />
             <div className={"collection-page"}>
                 <h1>Check out all your cards</h1>
                 <Link to={"/addCard"} ><Button>Add a card to collection </Button></Link>
+                <CardSort sortTypes={sorts} />
                 <div className={"card-collection"}> {this.renderCollection()}</div>
             </div>
             </div>
