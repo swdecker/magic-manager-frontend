@@ -6,7 +6,8 @@ import MagicNavbar from '../components/MagicNavbar'
 import CardSort from '../components/CardSort'
 export default class CollectionPage extends Component {
     state = {
-        cards:[]
+        cards:[],
+        currentSort: 'alphabetic'
 
     }
     retrieveCardsFetch=()=>{
@@ -55,11 +56,27 @@ export default class CollectionPage extends Component {
     }
 
     renderCollection = () =>{
-        if( this.state.cards.length>0){
-            return this.state.cards.map(card =><MagicCard removeCard={this.removeCard} key={card.card.name} num_owned={card.num_owned} userCardId={card.id} card={card.card} />)
+        if( this.state.cards.length>0 ){
+            return this.sortCards().map(card =><MagicCard removeCard={this.removeCard} key={card.card.name} num_owned={card.num_owned} userCardId={card.id} card={card.card} />)
+        } 
+    }
+    sortCards = ()=>{
+        //return this.state.cards sorted by this.state.currentSort
+        switch( this.state.currentSort){
+            case 'alphabetic':
+                return this.state.cards
+            case 'color':
+                return this.state.cards
+            case 'number owned':
+                console.log(this.state.cards.sort((card1,card2)=>{return card2.num_owned-card1.num_owned}))
+                return this.state.cards.sort((card1,card2)=>card2.num_owned-card1.num_owned)
+            default:
+                return this.state.cards
         }
     }
-
+    handleSortChange = (event)=>{
+        this.setState({currentSort: event.target.value})
+    }
 
     render() {
         const sorts = ['alphabetic', 'color', 'number owned']
@@ -69,7 +86,7 @@ export default class CollectionPage extends Component {
             <div className={"collection-page"}>
                 <h1>Check out all your cards</h1>
                 <Link to={"/addCard"} ><Button>Add a card to collection </Button></Link>
-                <CardSort sortTypes={sorts} />
+                <CardSort handleChange={this.handleSortChange} currentSort={this.state.currentSort} sortTypes={sorts} />
                 <div className={"card-collection"}> {this.renderCollection()}</div>
             </div>
             </div>
