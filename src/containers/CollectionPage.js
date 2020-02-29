@@ -64,7 +64,11 @@ export default class CollectionPage extends Component {
         //return this.state.cards sorted by this.state.currentSort
         switch( this.state.currentSort){
             case 'alphabetic':
-                return this.state.cards
+                return this.state.cards.sort((card1,card2)=>{
+                    if(card1.card.name < card2.card.name) { return -1; }
+                    if(card1.card.name > card2.card.name) { return 1; }
+                    return 0
+                })
             case 'color':
                 return this.state.cards
             case 'number owned':
